@@ -1,0 +1,38 @@
+services:
+  app:
+    image: php:8.2-apache
+    hostname: ltx_app
+    ports:
+      - 80:80
+    volumes:
+      - .:/var/www/html
+    environment:
+      LTX_DB_HOST: ${MYSQL_HOST}
+      LTX_DB_NAME: ${MYSQL_DATABASE}
+      LTX_DB_USER: ${MYSQL_USER}
+      LTX_DB_PASSWORD: ${MYSQL_PASSWORD}
+      LTX_STR_CRYPT_KEY: ${STR_CRYPT_KEY}
+      LTX_S_API_KEY: ${S_API_KEY}
+      LTX_L_KEY: ${L_KEY}
+      LTX_D_API_KEY: ${D_API_KEY}
+    links:
+      - db
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:11.5
+    hostname: ltx_db
+    ports:
+      - 3306:3306
+    volumes:
+      - db_volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+volumes:
+  db_volume:
+

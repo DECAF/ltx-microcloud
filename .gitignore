@@ -2,3 +2,6 @@ geheimnix/
 data_secret/
 *.log
 .vscode
+
+.DS_Store
+.env

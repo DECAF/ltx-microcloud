@@ -1,5 +1,4 @@
 <?php
-
 /*****************************************************
  * Jo's Micro Cloud Login Script (C)JoEmbedded.de 
  * Last modified: 11.07.2022
@@ -20,10 +19,11 @@
  * - Change Database access in config.inc.php
  * - Set header where to jump (see '$page_intern') or uncomment for tests
  *****************************************************/
+$show = false;
 
 // ------------ Global PHP Setup ------------------
 error_reporting(E_ALL);
-require_once("conf/config.inc.php");	// DB Access 
+require_once("conf/config.inc.php");	// DB Access
 require_once("inc/db_funcs.inc.php"); // Init DB
 
 check_https();
@@ -212,6 +212,7 @@ if (strlen($action)) {
 			break;
 
 		case "register":
+            if (!$show) break;
 			$ticket = @$_POST['uticket'];
 			if (strlen($ticket) != 16) {
 				$msg = "<span class=\"err\">ERROR: Invalid Ticket!</span>";
@@ -282,6 +283,7 @@ if (strlen($action)) {
 			break;
 
 		case "forgot":
+            if (!$show) break;
 			if (!isset($mail)) break;
 			$statement = $pdo->prepare("SELECT * FROM users WHERE email = ? ");
 			$qres = $statement->execute(array($mail));
@@ -354,9 +356,11 @@ if (strlen($action)) {
 			<div class="form-item">
 				<input type="checkbox" checked="checked" name="rem" id="rem_l">
 				<label for="rem_l">Remember me (using Cookie)</label><br>
-				<button type="submit">Login <i class="fas fa-sign-in-alt"></i></button> &nbsp; &nbsp;
+				<button type="submit">Login <i class="fas fa-sign-in-alt"></i></button>
+<?php if ($show) { ?>
 				<button type="button" onclick="gotoRegister()">Register User</button>
 				<button type="button" onclick="gotoForgot()">Forgot Password?</button>
+<?php } ?>
 			</div>
 		</form>
 		<!-- ***REGISTER USER*** -->
@@ -388,8 +392,10 @@ if (strlen($action)) {
 				<input type="checkbox" checked="checked" name="rem" id="rem_r">
 				<label for="rem_r">Remember me (using Cookie)</i></label><br>
 				<button type="button" onclick="gotoLogin()">Login</button> &nbsp; &nbsp;
+<?php if ($show) { ?>
 				<button type="submit">Register User <i class="fas fa-user-plus"></i></button> &nbsp; &nbsp;
 				<button type="button" onclick="gotoForgot()">Forgot Password?</button>
+<?php } ?>
 			</div>
 		</form>
 		<!-- ***FORGOT PASSWORD*** -->
@@ -403,8 +409,10 @@ if (strlen($action)) {
 			</div>
 			<div class="form-item">
 				<button type="button" onclick="gotoLogin()">Login</button>
+<?php if ($show) { ?>
 				<button type="button" onclick="gotoRegister()">Register User</button> &nbsp; &nbsp;
 				<button type="submit">Forgot Password? <i class="fas fa-envelope"></i></button>
+<?php } ?>
 			</div>
 		</form>
 		<!--- *** Opt User-Text *** --->
@@ -419,7 +427,9 @@ if (strlen($action)) {
 		<div class="cloud x5"></div>
 		<!-- ***FOOTER*** -->
 		<div class="footer">
+<?php if ($show) { ?>
 			<a href="/">[Visit our Homepage]</a> &nbsp; <a href="../docs/">[Media-Browser]</a>
+<?php } ?>
 		</div>
 	</div>
 	<script>
@@ -429,6 +439,7 @@ if (strlen($action)) {
 			document.getElementById("loginForm").style.display = "block";
 		}
 
+<?php if ($show) { ?>
 		function gotoRegister(event) {
 			document.getElementById("loginForm").style.display = "none";
 			document.getElementById("forgotForm").style.display = "none";
@@ -440,6 +451,7 @@ if (strlen($action)) {
 			document.getElementById("registerForm").style.display = "none";
 			document.getElementById("forgotForm").style.display = "block";
 		}
+<?php } ?>
 
 		function setPasswordVisibility() {
 			var pswIsChecked = document.getElementById("checkPswLogin").checked;
