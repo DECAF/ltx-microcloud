@@ -4,11 +4,11 @@
 	// Key stored as defines to prevent access via webserver (marked as '***SECRET***'  set to own values!)
 	
 	// *** Change Directory for S_DATA and internal access key to prevent external call of scripts!!! ***
-	define ("S_API_KEY","xSintXtl"); 	// This the Server's Internal-API_KEY (for triggers, auto-cleanup,..) (keep ***SECRET***!!!)
+//	define ("S_API_KEY","xSintXtl"); 	// This the Server's Internal-API_KEY (for triggers, auto-cleanup,..) (keep ***SECRET***!!!)
 	define ("S_DATA","../data_secret");	// Server's ***SECRET*** data directory 
 	
 	define ("DB_QUOTA","90\n1000"); // Default Quota for new Devices (if Database is used: 'Days\nLines') opt. with Webhook(PushPull)
-	define ("L_KEY","LegacyLTX");	// legacyKey for ***LEGACY Login***
+//	define ("L_KEY","LegacyLTX");	// legacyKey for ***LEGACY Login***
 	define ("MAXM_2GM", 20000);	// max. auto upload limit for 2G/LTE-M
 	define ("MAXM_NB", 5000);	// LTE-NB is slow
 	// Optionally (if GPS_VIEW used):
@@ -25,9 +25,13 @@
 	define ("CELLOC_SERVER_URL","https://flexgate.org/ltx_api/gcells/gcells.php"); // Public implementation
 
 	//define ("DAPIKEY_SERVER","http://localhost/ltx/sw/conf/_extern_check_dapikey.php"); // define/edit to use external D_API_KEY
-	define ("D_API_KEY","LX1310"); // This the DEVICE-API_KEY to access the Server (used by Device's Firmware) (keep ***SECRET***!!!)
+//	define ("D_API_KEY","LX1310"); // This the DEVICE-API_KEY to access the Server (used by Device's Firmware) (keep ***SECRET***!!!)
 
 	define ("OBX_ACCESS","xxx\nxxx"); 	// ORBCOMM Credentials access_id\npassword
-	
+
+// use ENV settings
+define ("S_API_KEY", $_ENV["LTX_S_API_KEY"]);
+define ("L_KEY", $_ENV["LTX_L_KEY"]);
+define ("D_API_KEY", $_ENV["LTX_D_API_KEY"]);
 
 ?>
