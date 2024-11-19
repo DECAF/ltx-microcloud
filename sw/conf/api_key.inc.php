@@ -7,7 +7,7 @@
 //	define ("S_API_KEY","xSintXtl"); 	// This the Server's Internal-API_KEY (for triggers, auto-cleanup,..) (keep ***SECRET***!!!)
 	define ("S_DATA","../data_secret");	// Server's ***SECRET*** data directory 
 	
-	define ("DB_QUOTA","90\n1000"); // Default Quota for new Devices (if Database is used: 'Days\nLines') opt. with Webhook(PushPull)
+//	define ("DB_QUOTA","90\n1000"); // Default Quota for new Devices (if Database is used: 'Days\nLines') opt. with Webhook(PushPull)
 //	define ("L_KEY","LegacyLTX");	// legacyKey for ***LEGACY Login***
 	define ("MAXM_2GM", 20000);	// max. auto upload limit for 2G/LTE-M
 	define ("MAXM_NB", 5000);	// LTE-NB is slow
@@ -33,5 +33,6 @@
 define ("S_API_KEY", $_ENV["LTX_S_API_KEY"]);
 define ("L_KEY", $_ENV["LTX_L_KEY"]);
 define ("D_API_KEY", $_ENV["LTX_D_API_KEY"]);
+define ("DB_QUOTA","365\n100000");
 
 ?>
