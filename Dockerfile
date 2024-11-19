@@ -1,4 +1,4 @@
-FROM php:apache
+FROM php:8.2-apache
 
 LABEL org.opencontainers.image.source='https://github.com/DECAF/ltx-microcloud'
 LABEL org.opencontainers.image.url='https://decaf.de'

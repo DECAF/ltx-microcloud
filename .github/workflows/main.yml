@@ -4,19 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag of base image in DockerHub'
-        required: true
-      auto_tag:
-        description: 'enable auto tagging (e.g. 1.2.3 will create tags 1, 1.2 & 1.2.3)'
-        default: 'true'
+        description: 'Tag (use CalVer: yyyy.mm.dd)'
         required: true
       push_latest_tag:
         description: 'push latest tag'
         default: 'true'
-        required: false
-      debug:
-        description: 'activate debug mode'
-        default: 'false'
         required: false
 
 env:
@@ -51,22 +43,7 @@ jobs:
       -
         name: Setup docker tags
         run: |
-          sed -i 's/FROM php:apache/FROM php:${{ github.event.inputs.tag }}-apache/g' ./Dockerfile
-          if [ "${{ github.event.inputs.auto_tag }}" == "true" ]; then
-            TAGS=
-            PARTS=($(echo "${{ github.event.inputs.tag }}" | tr '.' '\n'))
-            if [[ ! -z "${PARTS[0]}" ]]; then
-              TAGS=$REGISTRY/$IMAGE_NAME:${PARTS[0]}
-            fi
-            if [[ ! -z "${PARTS[1]}" ]]; then
-              TAGS=$TAGS,$REGISTRY/$IMAGE_NAME:${PARTS[0]}.${PARTS[1]}
-            fi
-            if [[ ! -z "${PARTS[2]}" ]]; then
-              TAGS=$TAGS,$REGISTRY/$IMAGE_NAME:${PARTS[0]}.${PARTS[1]}.${PARTS[2]}
-            fi
-          else
-            TAGS=$REGISTRY/$IMAGE_NAME:${{ github.event.inputs.tag }}
-          fi
+          TAGS=$REGISTRY/$IMAGE_NAME:${{ github.event.inputs.tag }}
           if [ "${{ github.event.inputs.push_latest_tag }}" == "true" ]; then
              TAGS=$TAGS,$REGISTRY/$IMAGE_NAME:latest
           fi
@@ -74,40 +51,6 @@ jobs:
           echo "TAGS"
           echo $TAGS
           echo TAGS=$TAGS >> $GITHUB_ENV
-      - name: Debug
-        if: github.event.inputs.debug == 'true'
-        env:
-          ENV_CONTEXT: ${{ toJson(env) }}
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-          JOB_CONTEXT: ${{ toJson(job) }}
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
-        run: |
-          echo "ENV_CONTEXT"
-          echo "$ENV_CONTEXT"
-          echo ""
-          echo "GITHUB_CONTEXT"
-          echo "$GITHUB_CONTEXT"
-          echo ""
-          echo "JOB_CONTEXT"
-          echo "$JOB_CONTEXT"
-          echo ""
-          echo "STEPS_CONTEXT"
-          echo "$STEPS_CONTEXT"
-          echo ""
-          echo "RUNNER_CONTEXT"
-          echo "$RUNNER_CONTEXT"
-          echo ""
-          echo "STRATEGY_CONTEXT"
-          echo "$STRATEGY_CONTEXT"
-          echo ""
-          echo "MATRIX_CONTEXT"
-          echo "$MATRIX_CONTEXT"
-          echo ""
-          echo "DOCKERFILE"
-          cat ./Dockerfile
       -
         name: Build and push
         uses: docker/build-push-action@v2
