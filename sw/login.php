@@ -1,5 +1,4 @@
 <?php
-
 /*****************************************************
  * Jo's Micro Cloud Login Script (C)JoEmbedded.de 
  * Last modified: 11.07.2022
@@ -23,7 +22,7 @@
 
 // ------------ Global PHP Setup ------------------
 error_reporting(E_ALL);
-require_once("conf/config.inc.php");	// DB Access 
+require_once("conf/config.inc.php");	// DB Access
 require_once("inc/db_funcs.inc.php"); // Init DB
 
 check_https();
@@ -212,6 +211,7 @@ if (strlen($action)) {
 			break;
 
 		case "register":
+            break;
 			$ticket = @$_POST['uticket'];
 			if (strlen($ticket) != 16) {
 				$msg = "<span class=\"err\">ERROR: Invalid Ticket!</span>";
@@ -282,6 +282,7 @@ if (strlen($action)) {
 			break;
 
 		case "forgot":
+            break;
 			if (!isset($mail)) break;
 			$statement = $pdo->prepare("SELECT * FROM users WHERE email = ? ");
 			$qres = $statement->execute(array($mail));
@@ -354,9 +355,11 @@ if (strlen($action)) {
 			<div class="form-item">
 				<input type="checkbox" checked="checked" name="rem" id="rem_l">
 				<label for="rem_l">Remember me (using Cookie)</label><br>
-				<button type="submit">Login <i class="fas fa-sign-in-alt"></i></button> &nbsp; &nbsp;
+				<button type="submit">Login <i class="fas fa-sign-in-alt"></i></button>
+                <!--&nbsp; &nbsp;
 				<button type="button" onclick="gotoRegister()">Register User</button>
 				<button type="button" onclick="gotoForgot()">Forgot Password?</button>
+                //-->
 			</div>
 		</form>
 		<!-- ***REGISTER USER*** -->
@@ -419,7 +422,9 @@ if (strlen($action)) {
 		<div class="cloud x5"></div>
 		<!-- ***FOOTER*** -->
 		<div class="footer">
+            <!--
 			<a href="/">[Visit our Homepage]</a> &nbsp; <a href="../docs/">[Media-Browser]</a>
+            //-->
 		</div>
 	</div>
 	<script>
