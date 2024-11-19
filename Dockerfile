@@ -7,6 +7,7 @@ LABEL org.opencontainers.image.vendor='DECAF'
 RUN apt-get update --fix-missing && \
     apt-get install -y \
     libpng-dev \
+    libwebp-dev \
     libzip-dev \
     mariadb-client \
     telnet \
