@@ -33,6 +33,6 @@
 define ("S_API_KEY", $_ENV["LTX_S_API_KEY"]);
 define ("L_KEY", $_ENV["LTX_L_KEY"]);
 define ("D_API_KEY", $_ENV["LTX_D_API_KEY"]);
-define ("DB_QUOTA","365\n100000");
+define ("DB_QUOTA",$_ENV["LTX_DB_QUOTA"]);
 
 ?>

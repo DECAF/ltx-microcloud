@@ -15,6 +15,7 @@ services:
       LTX_S_API_KEY: ${S_API_KEY}
       LTX_L_KEY: ${L_KEY}
       LTX_D_API_KEY: ${D_API_KEY}
+      LTX_DB_QUOTA: ${DB_QUOTA}
     links:
       - db
     depends_on:
